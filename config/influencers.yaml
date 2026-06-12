@@ -1,0 +1,115 @@
+# Curated roster of top influencers in LLMs, AI, ML, and recommender systems.
+#
+# Fields per entry:
+#   name:            display name
+#   x:               X.com handle (without @), omit if not active there
+#   youtube:         YouTube handle (without @), omit if no channel.
+#                    Channel IDs are resolved automatically and cached in data/state.json.
+#   focus:           short tag used to group items in the digest
+#
+# Edit freely — the tracker picks up changes on the next run.
+
+influencers:
+  # ── LLM / frontier-lab leaders ─────────────────────────────────────────
+  - name: Sam Altman
+    x: sama
+    focus: LLM / OpenAI
+  - name: Demis Hassabis
+    x: demishassabis
+    focus: LLM / Google DeepMind
+  - name: Mustafa Suleyman
+    x: mustafasuleyman
+    focus: LLM / Microsoft AI
+  - name: Ilya Sutskever
+    x: ilyasut
+    focus: LLM / SSI
+  - name: Aidan Gomez
+    x: aidangomez
+    focus: LLM / Cohere
+
+  # ── Researchers & educators ────────────────────────────────────────────
+  - name: Andrej Karpathy
+    x: karpathy
+    youtube: AndrejKarpathy
+    focus: LLM / education
+  - name: Yann LeCun
+    x: ylecun
+    focus: AI research
+  - name: Geoffrey Hinton
+    x: geoffreyhinton
+    focus: AI research
+  - name: Andrew Ng
+    x: AndrewYNg
+    youtube: Deeplearningai
+    focus: ML / education
+  - name: Fei-Fei Li
+    x: drfeifei
+    focus: AI research / World Labs
+  - name: François Chollet
+    x: fchollet
+    focus: AI research / ARC
+  - name: Jim Fan
+    x: DrJimFan
+    focus: Robotics / NVIDIA
+  - name: Sebastian Raschka
+    x: rasbt
+    youtube: SebastianRaschka
+    focus: LLM / education
+  - name: Jeremy Howard
+    x: jeremyphoward
+    focus: ML / fast.ai
+  - name: Percy Liang
+    x: percyliang
+    focus: LLM research / Stanford
+  - name: Lilian Weng
+    x: lilianweng
+    focus: LLM research
+  - name: Chip Huyen
+    x: chipro
+    focus: ML systems
+  - name: Nathan Lambert
+    x: natolambert
+    focus: LLM / Interconnects
+  - name: swyx
+    x: swyx
+    youtube: LatentSpacePod
+    focus: AI engineering / Latent Space
+
+  # ── AI / ML YouTube channels ───────────────────────────────────────────
+  - name: Lex Fridman
+    x: lexfridman
+    youtube: lexfridman
+    focus: AI interviews
+  - name: Two Minute Papers
+    youtube: TwoMinutePapers
+    focus: AI research explainers
+  - name: Yannic Kilcher
+    x: ykilcher
+    youtube: YannicKilcher
+    focus: paper reviews
+  - name: AI Explained
+    youtube: aiexplained-official
+    focus: frontier-model analysis
+  - name: Machine Learning Street Talk
+    youtube: MachineLearningStreetTalk
+    focus: ML interviews
+  - name: 3Blue1Brown
+    youtube: 3blue1brown
+    focus: math / ML education
+  - name: StatQuest
+    youtube: statquest
+    focus: ML education
+
+  # ── Recommender systems ────────────────────────────────────────────────
+  - name: Xavier Amatriain
+    x: xamat
+    focus: RecSys
+  - name: Eugene Yan
+    x: eugeneyan
+    focus: RecSys / applied ML
+  - name: Gabriel Moreira
+    x: gspmoreira
+    focus: RecSys / NVIDIA Merlin
+  - name: Even Oldridge
+    x: even_oldridge
+    focus: RecSys / NVIDIA Merlin
