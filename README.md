@@ -14,14 +14,27 @@ Every day a GitHub Actions job:
 2. **Pulls YouTube channel updates** via channel RSS feeds (no API key needed).
 3. **Asks Claude (`claude-opus-4-8`) to identify the notable updates** for the
    industry — model releases, significant papers, product launches, policy
-   moves — and discard the noise.
+   moves — and discard the noise. _Skipped when no API key is set (see below)._
 4. **Commits a markdown digest** to [`digests/`](digests/) —
    `digests/YYYY-MM-DD.md` plus a rolling `digests/latest.md`.
+
+## The API key is optional
+
+- **With `ANTHROPIC_API_KEY` set** — Claude curates the scrape into a
+  notable-updates digest (top stories, smaller items, themes).
+- **Without it** — the tracker still scrapes daily and writes a *raw* digest:
+  every new post/video grouped by source and author, newest first, with no AI
+  filtering. Completely free; the digest header shows `Mode: raw (no API key)`.
+
+Note: an **Anthropic API key is billed separately from a Claude Pro/Max
+subscription** — it uses pay-as-you-go credits set up in the
+[Anthropic Console](https://console.anthropic.com), not your chat plan. A daily
+run is only cents/month, but the raw mode above lets you run entirely free.
 
 ## Setup
 
 1. Add repository secrets (**Settings → Secrets and variables → Actions**):
-   - `ANTHROPIC_API_KEY` — required, for the digest analysis.
+   - `ANTHROPIC_API_KEY` — optional. Enables AI curation; omit it for raw mode.
    - `X_BEARER_TOKEN` — optional but strongly recommended. Reading posts
      requires a **paid X API plan** (Basic or higher). Without it the tracker
      falls back to public Nitter instances, which are unreliable; the digest
@@ -34,8 +47,8 @@ Every day a GitHub Actions job:
 
 ```bash
 pip install -r requirements.txt
-export ANTHROPIC_API_KEY=sk-ant-...
-export X_BEARER_TOKEN=...        # optional
+export ANTHROPIC_API_KEY=sk-ant-...   # optional — omit for free raw mode
+export X_BEARER_TOKEN=...             # optional
 python -m tracker.main
 ```
 

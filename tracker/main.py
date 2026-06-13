@@ -1,18 +1,21 @@
-"""Daily run: fetch new posts/videos, have Claude flag notable updates,
-write digests/YYYY-MM-DD.md (and digests/latest.md), update state.
+"""Daily run: fetch new posts/videos, optionally have Claude flag notable
+updates, write digests/YYYY-MM-DD.md (and digests/latest.md), update state.
 
 Usage: python -m tracker.main
-Env:   ANTHROPIC_API_KEY (required), X_BEARER_TOKEN (optional but recommended)
+Env:   ANTHROPIC_API_KEY (optional — enables AI curation; without it the
+         tracker writes a raw grouped listing instead)
+       X_BEARER_TOKEN  (optional but recommended for reliable X coverage)
 """
 
 from __future__ import annotations
 
 import logging
+import os
 import sys
 from datetime import datetime, timezone
 
 from .config import DIGEST_DIR, load_influencers
-from .digest import generate_digest
+from .digest import generate_digest, render_raw
 from .fetch_x import fetch_x_items
 from .fetch_youtube import fetch_youtube_items
 from .state import is_new, load_state, mark_seen, save_state
@@ -31,18 +34,23 @@ def main() -> int:
     new_items = [i for i in x_items + yt_items if is_new(state, i.id)]
     log.info("%d new items (of %d fetched)", len(new_items), len(x_items) + len(yt_items))
 
+    have_key = bool(os.environ.get("ANTHROPIC_API_KEY"))
+    mode = "AI-curated" if have_key else "raw (no API key)"
     today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
     header = (
         f"# LLM Frontier Digest — {today}\n\n"
         f"_Sources: {len(new_items)} new items from "
         f"{sum(1 for i in influencers if i.x)} X accounts ({x_status}) and "
-        f"{sum(1 for i in influencers if i.youtube)} YouTube channels._\n\n"
+        f"{sum(1 for i in influencers if i.youtube)} YouTube channels. "
+        f"Mode: {mode}._\n\n"
     )
 
-    if new_items:
+    if not new_items:
+        body = "_No new posts or videos in the lookback window._\n"
+    elif have_key:
         body = generate_digest(new_items)
     else:
-        body = "_No new posts or videos in the lookback window._\n"
+        body = render_raw(new_items)
 
     for item in new_items:
         mark_seen(state, item.id)

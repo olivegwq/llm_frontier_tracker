@@ -1,12 +1,14 @@
-"""Turn raw fetched items into a daily digest of notable industry updates,
-using Claude to separate signal from noise."""
+"""Turn raw fetched items into a daily digest of notable industry updates.
+
+With an ANTHROPIC_API_KEY set, Claude separates signal from noise and writes
+a curated digest. Without one, render_raw() produces a plain grouped listing
+so the tracker still works (and stays free), just without AI curation."""
 
 from __future__ import annotations
 
 import logging
+from collections import defaultdict
 from datetime import datetime, timezone
-
-import anthropic
 
 from .items import Item
 
@@ -70,6 +72,8 @@ def build_user_prompt(items: list[Item]) -> str:
 
 
 def generate_digest(items: list[Item]) -> str:
+    import anthropic  # imported lazily so the no-key path needs no dependency
+
     client = anthropic.Anthropic()
     with client.messages.stream(
         model=MODEL,
@@ -83,3 +87,38 @@ def generate_digest(items: list[Item]) -> str:
         log.error("Claude declined the digest request: %s", response.stop_details)
         return "_Digest generation was declined by the model today._"
     return next(b.text for b in response.content if b.type == "text")
+
+
+def render_raw(items: list[Item]) -> str:
+    """Plain grouped listing used when no ANTHROPIC_API_KEY is set.
+
+    No AI curation — just every new item, grouped by source and author,
+    newest first, so you can skim the raw feed yourself."""
+    lines = [
+        "> No `ANTHROPIC_API_KEY` set — showing the raw scrape without AI "
+        "curation. Add the secret to get notable-updates summaries.\n",
+    ]
+    source_labels = {"x": "X / Twitter", "youtube": "YouTube"}
+    by_source: dict[str, list[Item]] = defaultdict(list)
+    for item in items:
+        by_source[item.source].append(item)
+
+    for source in ("x", "youtube"):
+        bucket = by_source.get(source)
+        if not bucket:
+            continue
+        lines.append(f"## {source_labels[source]}\n")
+        by_author: dict[str, list[Item]] = defaultdict(list)
+        for item in bucket:
+            by_author[item.author].append(item)
+        for author in sorted(by_author):
+            entries = sorted(by_author[author], key=lambda i: i.published_at, reverse=True)
+            focus = entries[0].focus
+            lines.append(f"### {author} — {focus}\n")
+            for item in entries:
+                headline = item.text.strip().splitlines()[0] if item.text.strip() else "(no text)"
+                stamp = item.published_at.strftime("%Y-%m-%d %H:%M UTC")
+                meta = f" · {item.metrics}" if item.metrics else ""
+                lines.append(f"- [{headline}]({item.url}) — {stamp}{meta}")
+            lines.append("")
+    return "\n".join(lines)
