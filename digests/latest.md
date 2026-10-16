@@ -1,4 +1,4 @@
-# LLM Frontier Digest — 2026-10-15
+# LLM Frontier Digest — 2026-10-16
 
 _Sources: 4 new items from 25 X accounts (unavailable — set the X_BEARER_TOKEN secret (paid X API plan) for reliable X coverage; Nitter fallback returned nothing) and 11 YouTube channels. Mode: raw (no API key)._
 
@@ -6,10 +6,13 @@ _Sources: 4 new items from 25 X accounts (unavailable — set the X_BEARER_TOKEN
 
 ## YouTube
 
+### Andrej Karpathy — LLM / education
+
+- [There's never been a better time to go into math](https://www.youtube.com/watch?v=LKrwhjOI8Nc) — 2026-10-16 16:15 UTC
+
 ### Lex Fridman — AI interviews
 
-- [Jensen Huang gets mobbed by engineers in Taiwan | Lex Fridman](https://www.youtube.com/watch?v=Xi_ehEsKAvI) — 2026-10-15 16:00 UTC
-- [Trying the famous Taiwanese oyster pancake | Lex Fridman and Jensen Huang in Taiwan](https://www.youtube.com/watch?v=W5BK-w6KJl8) — 2026-10-15 12:00 UTC
-- [Trying the world's smelliest fruit (Durian) in Taiwan | Lex Fridman and Jensen Huang](https://www.youtube.com/watch?v=hDZgd6q76IE) — 2026-10-15 02:20 UTC
-- [Jensen Huang hypes Lex to everyone](https://www.youtube.com/watch?v=z5jQKEX_wuY) — 2026-10-14 21:15 UTC
+- [Why Taiwan dominates the semiconductor industry | Lex Fridman and Jensen Huang](https://www.youtube.com/watch?v=zoWFwamxRdQ) — 2026-10-16 17:18 UTC
+- [The famous braised pig's feet dish in Taiwan | Lex Fridman and Jensen Huang](https://www.youtube.com/watch?v=LY32E543H2M) — 2026-10-16 12:00 UTC
+- [NVIDIA party with Jensen Huang in Taiwan | Lex Fridman](https://www.youtube.com/watch?v=PGsfYxNi_c0) — 2026-10-15 22:03 UTC
 
